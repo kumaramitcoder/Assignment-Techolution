@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+    </script> 
+      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+    </script> 
+      
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+    </script> 
+
+</head>
+
+<body>
+    <br>
+    <h1 class="text-center">Techolution Assignment</h1>
+    <hr>
+    <!-- Task 4 :  Sample Table -->
+
+    <table style="width:60%" id="stu_data" class="m-auto table table-bordered ">
+        <thead class="text-center">
+            <tr>
+                <th colspan="4">Students​ ​Result​ ​Board</th>
+            </tr>
+            <tr style="font-style: italic;">
+              <th>Student​ ​Name</th>
+              <th>Roll​ ​Number</th>
+              <th>Total​ ​Marks</th>
+              <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr >
+              <td>Abhisek</td>
+              <td>KV2017-5A1</td>
+              <td>110</td>
+              <td>Pass</td>
+            </tr>
+            <tr class="text-danger">
+                <td>Rajiv</td>
+                <td>KV2017-5A2</td>
+                <td>84</td>
+                <td>Fail</td>
+            </tr>
+            <tr class="text-sucess">
+                <td>Zoya</td>
+                <td>KV2017-5A3</td>
+                <td>123</td>
+                <td>Topper</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br>
+    <hr>
+    <div class="form-row text-center position-relative">
+        <div class="col-12">
+            <a href="form.html" target="_self"><button type="button" class="btn btn-primary ">School Admission Form</button></a>
+        </div>
+     </div>
+    
+
+<script type="text/javascript">
+
+    function parseAndClean(data){
+
+        // Task 1 : sorting the students by alphabetical order of their names 
+        const students = data.sort( 
+            function(a, b) {
+                return a["name"].localeCompare(b["name"]);
+            }
+        );
+
+        // Task 2 : Make first letter of name in uppercase.
+        students.forEach(row => {
+            row["name"] = row["name"][0].toUpperCase() + row["name"].slice(1);
+        });
+
+        //summing up all the marks
+        students.forEach(row => {
+            row["total_marks"] = row["marks"]["English"] + row["marks"]["Maths"]+row["marks"]["Science"];
+        });
+
+        //Task 3 : Deternime the toper and and failed student.
+        var list = [];
+        students.forEach(row => list.push(row["total_marks"]));
+        var max_marks = Math.max(...list);
+        
+        students.forEach(row => {
+            if(row["total_marks"] == max_marks){
+                row["status"] = "Topper";
+            }
+            else if(row["marks"]["English"] < 20 || row["marks"]["Maths"] < 20 || row["marks"]["Science"] < 20 ){
+                row["status"] = "Fail";
+            }
+            else {
+                row["status"] = "Pass";   
+            }
+
+        });    
+        return students;
+
+    }
+    
+    function populateData(json){
+
+        const dataBody = document.querySelector("#stu_data > tbody");
+        
+        while(dataBody.firstChild){
+            dataBody.removeChild(dataBody.firstChild);
+        }
+
+        
+        students.forEach(row => {
+
+            const tr = document.createElement("tr");
+            
+            const td_name = document.createElement("td");
+            td_name.textContent = row["name"];
+            tr.appendChild(td_name);
+            
+            const td_rollNo = document.createElement("td");
+            td_rollNo.textContent = row["rollNumber"];
+            tr.appendChild(td_rollNo);
+            
+            const td_marks = document.createElement("td"); 
+            td_marks.textContent = row["total_marks"];
+            tr.appendChild(td_marks);
+            
+            const td_status = document.createElement("td");            
+            td_status.textContent = row["status"];
+            tr.appendChild(td_status);
+
+            if(row["status"].localeCompare("Topper") == 0){
+                tr.style.color = "LIGHTGREEN";
+            }
+            else if(row["status"].localeCompare("Fail") == 0){
+                tr.style.color = "RED";
+            }
+
+            dataBody.appendChild(tr);
+        });
+    }
+
+
+
+    function loadData(){
+        var data = [
+                {   
+                name:"rajiv",
+                marks:{Maths:18, English:21, Science:45},
+                rollNumber: "KV2017-5A2"
+                },
+                {
+                name:"zoya",
+                marks:{Maths:42, English:31, Science:50},
+                rollNumber: "KV2017-5A3"
+                },
+                
+                {
+                name:"abhishek",
+                marks:{Maths:43, English:30, Science:37},
+                rollNumber: "KV2017-5A1"
+                },
+                {
+                name:"amit",
+                marks:{Maths:48, English:46, Science:42},
+                rollNumber: "KV2017-5A5"
+                },
+                {
+                name:"abhishek",
+                marks:{Maths:23, English:12, Science:36},
+                rollNumber: "KV2017-5A4"
+                }
+                
+            ];
+            return data;
+    }
+
+    var data = loadData();
+    var students = parseAndClean(data);
+    populateData(students);
+
+    
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadData();
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <title>Student Form</title>  
+      
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+    </script> 
+      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+    </script> 
+      
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+    </script> 
+</head>  
+  
+<body>  
+    
+    <h1 class="text-primary text-center"> 
+        <u>Techolution</u> 
+    </h1> 
+      
+    <h2 class="text-center">Student form</h2> 
+    <hr><br>
+    <div class="container"> 
+        <form id="formSTU" action="#" method="POST" name="myform"> 
+           
+            <div class="form-group"> 
+                <label for="fname">First Name [Alphabets Only] :</label> 
+                <input type="text" class="form-control" id="fname" name="one" onKeyup="fNameValidate()" maxlength="20" placeholder="Enter First Name" onKeyup="btnnn()">
+            </div> 
+              
+            <div class="form-group"> 
+                <label for="lname">Last Name [Alphabets Only] :</label> 
+                <input type="text" class="form-control" id="lname" name="two" onkeyup="lastNameValidation()" maxlength="20" placeholder="Enter Last Name" onKeyup="btnnn()">
+            </div> 
+        
+            <div class="form-group"> 
+                <label for="class">Class [AlphaNumeric Only] :</label> 
+                <input type="text" class="form-control" name="three" id="clas" placeholder="Enter Class Section" onKeyup="btnnn()" required> 
+            </div> 
+
+            <div class="form-group"> 
+                <label for="yop">Year of Passing [Bellow 2017] :</label> 
+                <input type="number" class="form-control" max="2017" min="0" name="four" id="yop" placeholder="Enter Passing Year" onKeyup="btnnn()" required>
+            </div> 
+
+            <div class="form-group"> 
+                <label for="percentage">Percentage [Numbers Only] :</label> 
+                <input type="number" class="form-control" name="five" id="percentage" placeholder="Enter Percentage" onKeyup="btnnn()" required>
+            </div> 
+
+            <div class="form-row text-center">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" disabled="disabled" value="form_register" id="submitbutton" onclick="validateform(document.myform)">SUBMIT</button>
+                </div>
+             </div>
+
+        </form> 
+    </div> 
+    
+    <a href="index.html">
+        <button type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">Students​ ​Result​ ​Board</span>
+        </button>
+    </a>
+
+
+    <script>
+
+        // School Admission Form and validate all its fields before submission
+
+        function validateform(abc){
+           
+            console.log(abc);
+            var fname = document.myform.one.value;
+            var lname = document.myform.two.value;
+            var clas = document.myform.three.value;
+            var yop = document.myform.four.value;
+            var percentage = document.myform.five.value;
+            var lastName=document.getElementById('lname').value
+            if(abc.fname.value!=null && abc.lname.value!=null && abc.clas.value!=null && abc.yop.value!=null && abc.percentage.value){
+                alert("Form submited successfuly")
+            }
+           
+            if ((fname==null || fname=='') && (lname==null || lname=='') && (clas==null || clas=='') && (yop==null || yop=='') && (percentage==null || percentage=='') ){
+                alert("Field can't be Empty");
+                return false;
+
+            }
+        }
+
+
+        //Task 5.1 : Name (accepts only alphabets a-zA-Z)
+
+
+        function fNameValidate(){
+            var fname = document.myform.one.value;
+                if(fname.match(/^[A-Za-z]+$/)){
+                    return true;
+                }
+                else{
+                    alert('First name should be string only');
+                    return false;
+                }
+              
+            
+            }
+            //Task 5.2 : Last Name (accepts only alphabets a-zA-Z)
+
+
+            function lastNameValidation(){
+                var lastName=document.getElementById('lname').value
+            
+            if(lastName.match(/^[A-Za-z]+$/)){
+                return true
+            }
+            else{
+                alert("Last name should be string only");
+            }
+        }
+
+
+        //Task 6 : Disable/hide the form submission button if any of the validation fails
+
+        function btnnn(){
+            var yop = document.myform.four.value;
+                if (yop>2017){
+                    alert("Please enter Year of Passing onle below 2017");
+
+                }
+            var f = document.forms["myform"].elements;
+            var cansubmit = true;
+
+                for (var i = 0; i < f.length; i++) {
+                    if (f[i].value.length == 0) cansubmit = false;
+                }
+
+                if (cansubmit) {
+                    document.getElementById('submitbutton').disabled = false;
+
+                }
+                else {
+                    document.getElementById('submitbutton').disabled = 'disabled';
+                }
+        }
+        
+
+    </script>
+</body>  
+  
+</html>       
